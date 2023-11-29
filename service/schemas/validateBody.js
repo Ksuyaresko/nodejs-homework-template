@@ -1,6 +1,6 @@
 const Joi = require("joi");
 
-const validateContact = (req, res, next) => {
+const validateBody = (req, res, next) => {
     const schema = Joi.object({
         name: Joi.string().required().messages({ "any.required": "missing required name field" }),
         email: Joi.string().required().messages({ "any.required": "missing required email field" }),
@@ -13,17 +13,4 @@ const validateContact = (req, res, next) => {
     next()
 };
 
-const validateContactPut = (req, res, next) => {
-    if (Object.keys(req.body).length === 0) {
-        res.status(400).json({ message: "missing fields" });
-    }
-    next()
-};
-const validateContactFavorite = (req, res, next) => {
-    if (req.body.favorite === undefined) {
-        res.status(400).json({ message: "missing field favorite" });
-    }
-    next()
-};
-
-module.exports = { validateContact, validateContactPut, validateContactFavorite }
+module.exports = validateBody

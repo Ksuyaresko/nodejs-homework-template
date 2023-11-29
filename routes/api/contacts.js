@@ -1,19 +1,32 @@
 const express = require("express");
-const { get, getById, create, update, remove, patch } = require("../../controller")
-const { validateContact, validateContactPut, validateContactFavorite } = require("../../models/utils");
+const {
+  get,
+  getById,
+  create,
+  update,
+  remove,
+  patch,
+} = require("../../controller");
+const {
+  validateContactPut,
+  validateContactFavorite,
+  errorWrap,
+  isValidId,
+} = require("../../utils");
+const validateBody = require("../../service/schemas/validateBody");
 
 const router = express.Router();
 
-router.get("/", get);
+router.get("/", errorWrap(get));
 
-router.get("/:contactId", getById);
+router.get("/:id", isValidId, errorWrap(getById));
 
-router.post("/", validateContact, create);
+router.post("/", validateBody, errorWrap(create));
 
-router.delete("/:contactId", remove);
+router.delete("/:id", isValidId, errorWrap(remove));
 
-router.put("/:contactId", validateContactPut, update);
+router.put("/:id", isValidId, validateContactPut, errorWrap(update));
 
-router.patch("/:contactId/favorite", validateContactFavorite, patch);
+router.patch("/:id/favorite", isValidId, validateContactFavorite, errorWrap(patch));
 
 module.exports = router;
