@@ -1,32 +1,37 @@
 const express = require("express");
-const {
-  get,
-  getById,
-  create,
-  update,
-  remove,
-  patch,
-} = require("../../controller");
+const { Contact } = require("../../controller");
 const {
   validateContactPut,
   validateContactFavorite,
   errorWrap,
-  isValidId,
 } = require("../../utils");
-const validateBody = require("../../service/schemas/validateBody");
+const { validateBody, isValidId, authorization } = require("../../middlewares");
+const { contactSchema } = require("../../models/schemas/contacts");
 
 const router = express.Router();
 
-router.get("/", errorWrap(get));
+router.get("/", authorization, errorWrap(Contact.get));
 
-router.get("/:id", isValidId, errorWrap(getById));
+router.get("/:id", authorization, isValidId, errorWrap(Contact.getById));
 
-router.post("/", validateBody, errorWrap(create));
+router.post("/", authorization, validateBody(contactSchema), errorWrap(Contact.create));
 
-router.delete("/:id", isValidId, errorWrap(remove));
+router.delete("/:id", authorization, isValidId, errorWrap(Contact.remove));
 
-router.put("/:id", isValidId, validateContactPut, errorWrap(update));
+router.put(
+  "/:id",
+  authorization,
+  isValidId,
+  validateContactPut,
+  errorWrap(Contact.update),
+);
 
-router.patch("/:id/favorite", isValidId, validateContactFavorite, errorWrap(patch));
+router.patch(
+  "/:id/favorite",
+  authorization,
+  isValidId,
+  validateContactFavorite,
+  errorWrap(Contact.patch),
+);
 
 module.exports = router;

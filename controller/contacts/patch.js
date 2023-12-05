@@ -1,14 +1,15 @@
-const service = require("../../service");
+const { Contact } = require("../../models");
 const patch = async (req, res, next) => {
-  const result = await service.updateContactStatus(
-    req.params.id,
-    req.body.favorite,
+  const result = await Contact.findByIdAndUpdate(
+    { _id: req.id },
+    { favorite: req.body.status },
+    { new: true },
   );
   if (result) {
     res.json(result);
   } else {
     res.status(404).json({
-      message: `Not found}`,
+      message: `Not found`,
     });
   }
 };

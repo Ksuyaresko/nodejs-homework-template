@@ -1,11 +1,11 @@
 const validateContactFavorite = require("./validateContactFavorite");
 const validateContactPut = require("./validateContactPut");
 const errorWrap = require("./errorWrap");
-const isValidId = require("./isValidId");
+const HttpError = require('./HttpError')
 
 module.exports = {
   validateContactFavorite,
   validateContactPut,
   errorWrap,
-  isValidId,
+  HttpError,
 };

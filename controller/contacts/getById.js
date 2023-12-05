@@ -1,6 +1,6 @@
-const service = require("../../service");
+const { Contact } = require("../../models");
 const getById = async (req, res, next) => {
-  const contactData = await service.getContactById(req.params.id);
+  const contactData = await Contact.findOne(req.params.id);
 
   if (contactData === null) {
     res.status(404).json({ message: "Not found" });

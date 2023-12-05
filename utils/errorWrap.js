@@ -1,7 +1,7 @@
 const errorWrap = (fn) => {
-    return function (req, res, next) {
+    return async function (req, res, next) {
         try {
-            fn(req, res, next)
+            await fn(req, res, next)
         } catch (e) {
             console.error(e)
             next(e)
