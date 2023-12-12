@@ -1,5 +1,5 @@
 const express = require("express");
-const { validateBody, authorization} = require("../../middlewares");
+const { validateBody, authorization, upload } = require("../../middlewares");
 const { schemasUser } = require("../../models");
 const { Auth } = require("../../controller");
 const { errorWrap } = require("../../utils");
@@ -16,15 +16,13 @@ router.post(
   validateBody(schemasUser.loginSchema),
   errorWrap(Auth.login),
 );
-router.get(
-  "/current",
-  authorization,
-  errorWrap(Auth.current),
-);
+router.get("/current", authorization, errorWrap(Auth.current));
+router.post("/logout", authorization, errorWrap(Auth.logout));
 router.post(
-  "/logout",
+  "/avatars",
   authorization,
-  errorWrap(Auth.logout),
+  upload.single("avatar"),
+  errorWrap(Auth.avatar),
 );
 
 module.exports = router;
