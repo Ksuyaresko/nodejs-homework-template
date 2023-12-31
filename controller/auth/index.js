@@ -2,7 +2,8 @@ const register = require("./register");
 const login = require("./login");
 const current = require("./current");
 const logout = require("./logout");
-const avatar = require("./avatar")
+const avatar = require("./avatar");
+const { verifyEmail, resendVerifyEmail } = require("./verify");
 
 module.exports = {
   register,
@@ -10,4 +11,6 @@ module.exports = {
   current,
   logout,
   avatar,
+  verifyEmail,
+  resendVerifyEmail,
 };

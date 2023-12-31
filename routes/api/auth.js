@@ -11,6 +11,9 @@ router.post(
   validateBody(schemasUser.registerSchema),
   errorWrap(Auth.register),
 );
+router.get("/verify/:verificationCode", errorWrap(Auth.verifyEmail));
+
+router.post("/verify", validateBody(schemasUser.emailSchema), errorWrap(Auth.resendVerifyEmail));
 router.post(
   "/login",
   validateBody(schemasUser.loginSchema),
